@@ -1,5 +1,5 @@
-var assert = require('chai').assert
-var gju = require('geojson-utils')
+import {assert} from 'chai'
+import gju from 'geojson-utils'
 
 describe('geojson', function () {
   it('Should include point on the corner of polygon', function () {

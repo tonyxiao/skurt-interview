@@ -1,28 +1,12 @@
-import request from 'request'
-import gju from 'geojson-utils'
-
-async function getJson(url) {
-  return new Promise((resolve, reject) => {
-    request.get(url, (err, res, body) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(JSON.parse(body))
-      }
-    })
-  })
-}
-
-async function isCarInBound(carId) {
-  const json = await getJson(`http://skurt-interview-api.herokuapp.com/carStatus/${carId}`)
-  return gju.pointInPolygon(json['features'][0]['geometry'], json['features'][1]['geometry'])
-}
+import {isCarInBound, areCarsInBound} from './lib'
 
 async function main() {
   try {
-    const carId = 2
-    const inBounds = await isCarInBound(carId)
-    console.log(`Car number ${carId} is inBounds=${inBounds}`)
+    // const carId = 2
+    // const inBounds = await isCarInBound(carId)
+    // console.log(`Car number ${carId} is inBounds=${inBounds}`)
+    const results = await areCarsInBound([1,2,3,4,5,6,7,8,9,10])
+    console.log('inbounds', results)
   } catch (err) {
     console.log(err)
   }

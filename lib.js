@@ -24,9 +24,9 @@ export async function areCarsInBound(carIds) {
   const results = await Promise.all(resultPromises)
 
   // does the job...
-  var resultsByCarId = {}
+  var resultsByCarId = []
   carIds.forEach((carId, index) => {
-    resultsByCarId[carId] = results[index]
+    resultsByCarId.push({carId, inBound: results[index]})
   })
   return resultsByCarId
 }
@@ -43,4 +43,31 @@ export async function sendErrorEmail(subject, text) {
     text,
   }
   return await mailer.messages().send(data)
+}
+
+export async function checkCarsAndSendError(carIds) {
+  console.log(`${new Date()} Checking car with ids: ${carIds}`)
+  try {
+    const results = await areCarsInBound(carIds)
+    const outOfBoundCars = results
+      .filter((result) => result.inBound === false)
+      .map((result) => result.carId)
+      
+    if (outOfBoundCars.length === 0) {
+      console.log('No cars are out of bounds')
+    } else {
+      console.log(`${outOfBoundCars.length} cars are out of bounds: ${outOfBoundCars}. Will send error email`)
+      await sendErrorEmail(
+        `ALERT: ${outOfBoundCars.length} are out of bounds`,
+        `Please check car with the following ids: ${outOfBoundCars}`
+      )
+    }
+  } catch (err) {
+    console.err('Error occured while checking cars in bounds, will send error email', err)
+    // TODO: If the email sending service itself fails we can be in trouble. Be more resilient
+    await sendErrorEmail(
+      'ERROR: Error while checking whether cars are in bounds',
+      `Error Details: ${err}`
+    )
+  }
 }

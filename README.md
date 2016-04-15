@@ -1,7 +1,7 @@
 # Dependencies
 npm install
 
-# Run indefinitely and check every 2.5 minutes
+# Run indefinitely and continue checking
 npm start
 
 # Basic test cases

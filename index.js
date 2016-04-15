@@ -7,6 +7,10 @@ const carIds = [1,2,3,4,5,6,7,8,9,10]
 // failure, and TCP-style congestion control.
 const seconds = 60 * 2
 
+// Start immediately
+checkCarsAndSendError(carIds)
+
+// They every 2 minutes thereafter
 setInterval(() => {
-  checkCarsAndSendError([1,2,3,4,5,6,7,8,9,10,11])
+  checkCarsAndSendError(carIds)
 }, seconds * 1000)

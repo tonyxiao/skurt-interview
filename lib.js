@@ -60,11 +60,11 @@ export async function checkCarsAndSendError(apiUrl, errorRecipient, carIds) {
     if (outOfBoundCars.length === 0) {
       console.log('No cars are out of bounds')
     } else {
-      console.log(`${outOfBoundCars.length} cars are out of bounds: ${outOfBoundCars}. Will send error email`)
+      console.log(`${outOfBoundCars.length} car(s) are out of bounds: ${outOfBoundCars}. Will send error email`)
       await sendErrorEmail(
         errorRecipient,
-        `ALERT: ${outOfBoundCars.length} are out of bounds`,
-        `Please check car with the following ids: ${outOfBoundCars}`
+        `ALERT: ${outOfBoundCars.length} car(s) are out of bounds`,
+        `Please check car(s) with the following ids: ${outOfBoundCars}`
       )
     }
   } catch (err) {

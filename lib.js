@@ -37,8 +37,8 @@ export async function sendErrorEmail(subject, text) {
   const domain = 'sandboxd1bddbf67c514f94a6849ed21a670f15.mailgun.org'
   const mailer = mailgun({apiKey, domain})
   const data = {
-    from: 'Error Reporter <postmaster@sandboxd1bddbf67c514f94a6849ed21a670f15.mailgun.org>',
-    to: 'tonyx.ca@gmail.com',
+    from: 'Tony Xiao Error Reporter <tony.xiao@sandboxd1bddbf67c514f94a6849ed21a670f15.mailgun.org>',
+    to: 'engineering@skurtapp.com',
     subject,
     text,
   }
